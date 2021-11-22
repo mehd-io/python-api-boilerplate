@@ -1,0 +1,44 @@
+{
+	"name": "PythonApiBoilerplate",
+	"image": "python-api-boilerplate.local:dev-latest",
+	"initializeCommand": "make get-img DOCKER_LAYER=dev",
+	"settings": {
+		"terminal.integrated.profiles.linux": {
+			"zsh": {
+				"path": "/bin/zsh",
+				"args": [
+					"-l"
+				]
+			},
+		},
+		"terminal.integrated.defaultProfile.linux": "zsh",
+		"python.defaultInterpreterPath": "/usr/local/bin/python",
+		"python.linting.enabled": true,
+		"python.formatting.provider": "black",
+		"python.formatting.blackPath": "/usr/local/bin/black",
+		"python.formatting.blackArgs": ["-l 90"],
+		"python.linting.mypyPath": "/usr/local/bin/mypy",
+		"python.testing.pyTestEnabled": true,
+		"python.testing.pytestPath": "/usr/local/bin/pytest",
+		"python.testing.autoTestDiscoverOnSaveEnabled": true,
+	},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [3001],
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"ms-python.python",
+		"eamodio.gitlens",
+		"ms-python.vscode-pylance",
+	],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "poetry config virtualenvs.create false && poetry install",
+
+	"mounts": [
+		"source=${localEnv:HOME}/.config,target=/root/.config,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached",
+		"source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind"
+	],
+}
