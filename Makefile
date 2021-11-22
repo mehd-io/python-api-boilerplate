@@ -66,7 +66,7 @@ get-img:
 	@echo 🐳 $@
 	@if [ "$$DOCKER_LAYER" != "base" ]; then\
 		echo 🔨 Pulling/Building base image first...; \
-		$(MAKE)pull-img DOCKER_LAYER=base || $(MAKE) _build-img DOCKER_LAYER=base;\
+		$(MAKE) pull-img DOCKER_LAYER=base || $(MAKE) _build-img DOCKER_LAYER=base;\
 	 fi;\
 	 $(MAKE) pull-img || $(MAKE) _build-img 
 	@if [ "$$PUSH_IMAGE" = "true" ]; then\
